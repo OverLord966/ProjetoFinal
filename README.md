@@ -1,8 +1,6 @@
-# Nome do Projeto
+# Gestão de Tarefas
 
-> Breve descrição do projeto numa ou duas frases. O que faz a aplicação? Para quem?
-
-**Exemplo:** *Sistema de gestão de uma biblioteca pessoal que permite registar livros, autores e empréstimos.*
+> Aplicação de consola em Python que permite a estudantes gerir tarefas académicas, prazos e prioridades de forma simples e organizada.
 
 ---
 
@@ -11,11 +9,11 @@
 | Campo            | Detalhe                              |
 |------------------|--------------------------------------|
 | **Curso**        | UFCD 10790 – Projeto de Programação  |
-| **Formando**     | [O teu nome completo]                |
-| **Formador**     | [Nome do formador]                   |
-| **Instituição**  | [Nome da instituição / empresa]      |
-| **Data de início** | [dd/mm/aaaa]                       |
-| **Data de entrega** | [dd/mm/aaaa]                      |
+| **Formando**     | Diogo Amaro                          |
+| **Formador**     | Carlos Barata                        |
+| **Instituição**  | IEFP                                 |
+| **Data de início** | [25/05/2026]                       |
+| **Data de entrega** | [19/06/2026]                      |
 | **Versão**       | 1.0                                  |
 
 ---
@@ -36,11 +34,16 @@
 
 ## Descrição
 
-Explica aqui o projeto com um pouco mais de detalhe do que na frase de abertura.
+A aplicação Gestão de Tarefas para Estudantes foi desenvolvida para ajudar alunos a organizarem o seu estudo diário, trabalhos, exames e atividades importantes.
+Muitos estudantes têm dificuldade em acompanhar prazos, priorizar tarefas e manter um registo claro do que já foi concluído.
 
-- Qual o problema que resolve?
-- Quem são os utilizadores?
-- Qual a abordagem técnica (ex: aplicação de consola em Python com base de dados SQLite)?
+Este projeto resolve esse problema através de uma aplicação simples, intuitiva e totalmente executada em consola, com:
+    registo de tarefas
+    edição e remoção
+    marcação como concluída
+    listagem filtrada por estado ou prioridade
+    persistência dos dados em ficheiro (SQLite ou JSON, conforme a versão final)
+A aplicação foi construída em Python, seguindo uma arquitetura em três camadas (UI, BLL, DAL) e utilizando SQLite como base de dados local.
 
 ---
 
@@ -48,12 +51,15 @@ Explica aqui o projeto com um pouco mais de detalhe do que na frase de abertura.
 
 Lista as principais funcionalidades implementadas:
 
-- [ ] Funcionalidade 1 — ex: Registo de utilizador
-- [ ] Funcionalidade 2 — ex: Login com autenticação
-- [ ] Funcionalidade 3 — ex: Listagem de produtos
-- [ ] Funcionalidade 4 — ex: ...
-
-> As checkboxes ficam marcadas (`[x]`) à medida que implementas cada funcionalidade.
+[x] Criar nova tarefa
+[x] Listar tarefas (todas, pendentes, concluídas)
+[x] Editar tarefa (título, descrição, prioridade, prazo)
+[x] Marcar tarefa como concluída
+[x] Apagar tarefa
+[x] Guardar e carregar dados automaticamente
+[ ] Exportar relatório de tarefas (opcional)
+[ ] Pesquisa avançada (opcional)
+> As checkboxes ficam marcadas (`[x]`) à medida que a funcionalidade é implementada.
 
 ---
 
@@ -142,23 +148,6 @@ pip install -r requirements.txt
 ```bash
 cd src
 python main.py
-```
-
----
-
-## Base de Dados
-
-> Preenche esta secção se o projeto usa base de dados.
-
-- **Sistema:** SQLite (ficheiro local) / *outro se aplicável*
-- **Ficheiro:** `src/database.db` *(criado automaticamente na primeira execução)*
-- **Esquema:** ver [`sql/criar_tabelas.sql`](sql/criar_tabelas.sql)
-
-Para inicializar a base de dados manualmente a partir dos scripts SQL:
-
-```bash
-sqlite3 database.db < sql/criar_tabelas.sql
-sqlite3 database.db < sql/dados_exemplo.sql
 ```
 
 ---
