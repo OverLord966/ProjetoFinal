@@ -8,6 +8,9 @@ from ui.menu import (
     opcao_apagar
 )
 
+# Ponto de entrada principal da aplicação.
+# Mostra o menu e encaminha a opção escolhida para a função correspondente.
+
 def main():
     while True:
         mostrar_menu()
@@ -30,6 +33,7 @@ def main():
             break
         else:
             print("❌ Opção inválida!")
+
 
 if __name__ == "__main__":
     main()

@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from bll.tarefas_service import (
     listar_tarefas,
     criar_tarefa,
@@ -7,20 +9,24 @@ from bll.tarefas_service import (
     mover_tarefa
 )
 
-from datetime import datetime
+# Módulo de interface de utilizador em linha de comando.
+# Contém funções que validam entradas e ligam opções do menu aos serviços.
 
 # -----------------------------
 # Funções de validação
 # -----------------------------
 
 def pedir_texto(mensagem):
+    """Lê um texto não vazio do utilizador."""
     while True:
         texto = input(mensagem).strip()
         if texto != "":
             return texto
         print("❌ Este campo não pode estar vazio.")
 
+
 def pedir_prioridade():
+    """Lê e valida a prioridade da tarefa."""
     prioridades_validas = ["baixa", "média", "alta"]
 
     while True:
@@ -32,6 +38,7 @@ def pedir_prioridade():
 from datetime import datetime, timedelta
 
 def pedir_data():
+    """Lê uma data válida e futura para o prazo da tarefa."""
     while True:
         data_str = input("Prazo (AAAA-MM-DD): ").strip()
 
@@ -56,6 +63,7 @@ def pedir_data():
 
 
 def pedir_id_tarefa():
+    """Lê um ID de tarefa existente a partir do utilizador."""
     tarefas = listar_tarefas()
 
     while True:
@@ -117,6 +125,7 @@ def opcao_listar():
 
 
 def opcao_editar():
+    """Mostra opções de edição e atualiza a tarefa selecionada."""
     id_tarefa = pedir_id_tarefa()
     opcao = submenu_editar()
 
@@ -166,24 +175,21 @@ def opcao_editar():
 
             novo_prazo = f"{ano}-{novo_mes}-{dia}"
 
-
         elif opc_data == "3":
-                novo_ano = input("Novo ano (ex: 2026): ").strip()
+            novo_ano = input("Novo ano (ex: 2026): ").strip()
 
-                if not validar_data(novo_ano, mes, dia):
-                    print("❌ Ano inválido ou data impossível.")
-                    return
+            if not validar_data(novo_ano, mes, dia):
+                print("❌ Ano inválido ou data impossível.")
+                return
 
-                if not data_nao_passada(novo_ano, mes, dia):
-                    print("❌ A nova data não pode ser anterior ao dia de hoje.")
-                    return
+            if not data_nao_passada(novo_ano, mes, dia):
+                print("❌ A nova data não pode ser anterior ao dia de hoje.")
+                return
 
-                novo_prazo = f"{novo_ano}-{mes}-{dia}"
-
+            novo_prazo = f"{novo_ano}-{mes}-{dia}"
 
         elif opc_data == "4":
             novo_prazo = pedir_data()
-
 
         else:
             print("\nOperação cancelada.\n")
@@ -197,13 +203,18 @@ def opcao_editar():
 
     print("\n✔ Tarefa editada com sucesso!\n")
 
+
 def validar_data(ano, mes, dia):
+    """Verifica se o ano, mês e dia formam uma data válida."""
     try:
         datetime(int(ano), int(mes), int(dia))
         return True
     except ValueError:
         return False
+
+
 def data_nao_passada(ano, mes, dia):
+    """Verifica se a data não é anterior a hoje."""
     try:
         nova_data = datetime(int(ano), int(mes), int(dia)).date()
         return nova_data >= datetime.now().date()
@@ -211,6 +222,7 @@ def data_nao_passada(ano, mes, dia):
         return False
 
 def submenu_editar():
+    """Mostra o submenu de edição e devolve a opção escolhida."""
     print("\n--- Editar Tarefa ---")
     print("1. Título")
     print("2. Descrição")
@@ -219,7 +231,10 @@ def submenu_editar():
     print("0. Cancelar")
 
     return input("Escolha o campo a editar: ")
+
+
 def submenu_editar_data():
+    """Mostra opções para alterar parte da data de prazo."""
     print("\n--- Editar Data ---")
     print("1. Alterar apenas o dia")
     print("2. Alterar apenas o mês")
@@ -229,18 +244,23 @@ def submenu_editar_data():
 
     return input("Escolha uma opção: ")
 
+
 def opcao_concluir():
+    """Marca a tarefa escolhida como concluída."""
     id_tarefa = pedir_id_tarefa()
     concluir_tarefa(id_tarefa)
     print("\n✔ Tarefa concluída com sucesso!\n")
 
 
 def opcao_apagar():
+    """Apaga a tarefa escolhida pelo utilizador."""
     id_tarefa = pedir_id_tarefa()
     apagar_tarefa(id_tarefa)
     print("\n✔ Tarefa apagada com sucesso!\n")
 
+
 def submenu_ordenar(tarefas):
+    """Permite ordenar tarefas por diferentes critérios."""
     print("\n--- Ordenar Tarefas ---")
     print("1. Por ID")
     print("2. Por prazo")
@@ -264,7 +284,10 @@ def submenu_ordenar(tarefas):
         return sorted(tarefas, key=lambda t: t["titulo"].lower())
     else:
         return tarefas
+
+
 def opcao_mover():
+    """Move a tarefa selecionada para outra posição na lista."""
     id_tarefa = pedir_id_tarefa()
     nova_pos = int(input("Nova posição na lista: "))
 
