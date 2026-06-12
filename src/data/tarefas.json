@@ -1,0 +1,38 @@
+[
+    {
+        "id": 1,
+        "titulo": "Fase 3 - Desenvolvimento",
+        "descricao": "Implementação do menu principal, Funções, Validações básicas e melhorias e prevenção de erros",
+        "prioridade": "alta",
+        "prazo": "2026-06-12",
+        "estado": "pendente",
+        "criado_em": "2026-06-11 10:57"
+    },
+    {
+        "id": 2,
+        "titulo": "Fase 4 - Testes",
+        "descricao": "Testes Unitários, Testes de integração e correção de erros",
+        "prioridade": "média",
+        "prazo": "2026-06-19",
+        "estado": "pendente",
+        "criado_em": "2026-06-11 10:45"
+    },
+    {
+        "id": 3,
+        "titulo": "Fase 5 - Apresentação",
+        "descricao": "Preparação da apresentação, Apresentação e entrega do relatório",
+        "prioridade": "alta",
+        "prazo": "2026-06-19",
+        "estado": "pendente",
+        "criado_em": "2026-06-11 10:46"
+    },
+    {
+        "id": 4,
+        "titulo": "test",
+        "descricao": "test",
+        "prioridade": "baixa",
+        "prazo": "2026-10-01",
+        "estado": "pendente",
+        "criado_em": "2026-06-11 11:47"
+    }
+]
