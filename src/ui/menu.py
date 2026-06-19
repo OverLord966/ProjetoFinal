@@ -1,5 +1,7 @@
 from datetime import datetime, timedelta
 
+from dal.tarefas_repository import guardar_tarefas, carregar_tarefas
+
 from bll.tarefas_service import (
     listar_tarefas,
     criar_tarefa,
@@ -9,12 +11,9 @@ from bll.tarefas_service import (
     mover_tarefa
 )
 
-# Módulo de interface de utilizador em linha de comando.
-# Contém funções que validam entradas e ligam opções do menu aos serviços.
-
-# -----------------------------
+# ============================================================
 # Funções de validação
-# -----------------------------
+# ============================================================
 
 def pedir_texto(mensagem):
     """Lê um texto não vazio do utilizador."""
@@ -35,7 +34,6 @@ def pedir_prioridade():
             return prioridade
         print("❌ Prioridade inválida! As opções são: baixa, média ou alta.")
 
-from datetime import datetime, timedelta
 
 def pedir_data():
     """Lê uma data válida e futura para o prazo da tarefa."""
@@ -45,7 +43,7 @@ def pedir_data():
         try:
             data = datetime.strptime(data_str, "%Y-%m-%d").date()
             hoje = datetime.now().date()
-            limite_max = hoje + timedelta(days=365 * 5)  # máximo 5 anos no futuro
+            limite_max = hoje + timedelta(days=365 * 5)
 
             if data < hoje:
                 print("❌ A data não pode ser anterior ao dia de hoje.")
@@ -59,7 +57,6 @@ def pedir_data():
 
         except ValueError:
             print("❌ Data inválida! Usa o formato AAAA-MM-DD.")
-
 
 
 def pedir_id_tarefa():
@@ -78,9 +75,10 @@ def pedir_id_tarefa():
 
         print("❌ Não existe nenhuma tarefa com esse ID.")
 
-# -----------------------------
-# Opções do menu
-# -----------------------------
+
+# ============================================================
+# Menu principal
+# ============================================================
 
 def mostrar_menu():
     print("\n=== Gestão de Tarefas ===")
@@ -90,7 +88,14 @@ def mostrar_menu():
     print("4. Marcar como concluída")
     print("5. Apagar tarefa")
     print("6. Mover tarefa")
+    print("7. Guardar tarefas")
+    print("8. Carregar tarefas")
     print("0. Sair")
+
+
+# ============================================================
+# Opções do menu
+# ============================================================
 
 def opcao_criar():
     titulo = pedir_texto("Título: ")
@@ -125,7 +130,6 @@ def opcao_listar():
 
 
 def opcao_editar():
-    """Mostra opções de edição e atualiza a tarefa selecionada."""
     id_tarefa = pedir_id_tarefa()
     opcao = submenu_editar()
 
@@ -149,7 +153,7 @@ def opcao_editar():
 
         ano, mes, dia = tarefa["prazo"].split("-")
 
-        if opc_data == "1":  # Alterar só o dia
+        if opc_data == "1":
             novo_dia = input("Novo dia (1-31): ").strip().zfill(2)
 
             if not validar_data(ano, mes, novo_dia):
@@ -204,8 +208,11 @@ def opcao_editar():
     print("\n✔ Tarefa editada com sucesso!\n")
 
 
+# ============================================================
+# Validações de data
+# ============================================================
+
 def validar_data(ano, mes, dia):
-    """Verifica se o ano, mês e dia formam uma data válida."""
     try:
         datetime(int(ano), int(mes), int(dia))
         return True
@@ -214,80 +221,54 @@ def validar_data(ano, mes, dia):
 
 
 def data_nao_passada(ano, mes, dia):
-    """Verifica se a data não é anterior a hoje."""
     try:
         nova_data = datetime(int(ano), int(mes), int(dia)).date()
         return nova_data >= datetime.now().date()
     except ValueError:
         return False
 
+
+# ============================================================
+# Submenus
+# ============================================================
+
 def submenu_editar():
-    """Mostra o submenu de edição e devolve a opção escolhida."""
     print("\n--- Editar Tarefa ---")
     print("1. Título")
     print("2. Descrição")
     print("3. Prioridade")
     print("4. Prazo (alterar apenas o dia)")
     print("0. Cancelar")
-
     return input("Escolha o campo a editar: ")
 
 
 def submenu_editar_data():
-    """Mostra opções para alterar parte da data de prazo."""
     print("\n--- Editar Data ---")
     print("1. Alterar apenas o dia")
     print("2. Alterar apenas o mês")
     print("3. Alterar apenas o ano")
     print("4. Alterar a data completa")
     print("0. Cancelar")
-
     return input("Escolha uma opção: ")
 
 
+# ============================================================
+# Outras operações
+# ============================================================
+
 def opcao_concluir():
-    """Marca a tarefa escolhida como concluída."""
     id_tarefa = pedir_id_tarefa()
     concluir_tarefa(id_tarefa)
     print("\n✔ Tarefa concluída com sucesso!\n")
 
 
 def opcao_apagar():
-    """Apaga a tarefa escolhida pelo utilizador."""
     id_tarefa = pedir_id_tarefa()
     apagar_tarefa(id_tarefa)
     print("\n✔ Tarefa apagada com sucesso!\n")
 
 
-def submenu_ordenar(tarefas):
-    """Permite ordenar tarefas por diferentes critérios."""
-    print("\n--- Ordenar Tarefas ---")
-    print("1. Por ID")
-    print("2. Por prazo")
-    print("3. Por prioridade")
-    print("4. Por estado")
-    print("5. Por título")
-    print("0. Voltar")
-
-    opcao = input("Escolha uma opção: ")
-
-    if opcao == "1":
-        return sorted(tarefas, key=lambda t: t["id"])
-    elif opcao == "2":
-        return sorted(tarefas, key=lambda t: t["prazo"])
-    elif opcao == "3":
-        prioridade_ordem = {"baixa": 1, "média": 2, "alta": 3}
-        return sorted(tarefas, key=lambda t: prioridade_ordem[t["prioridade"]])
-    elif opcao == "4":
-        return sorted(tarefas, key=lambda t: t["estado"])
-    elif opcao == "5":
-        return sorted(tarefas, key=lambda t: t["titulo"].lower())
-    else:
-        return tarefas
-
-
 def opcao_mover():
-    """Move a tarefa selecionada para outra posição na lista."""
     id_tarefa = pedir_id_tarefa()
     nova_pos = int(input("Nova posição na lista: "))
 
@@ -296,3 +277,17 @@ def opcao_mover():
     else:
         print("\n❌ Erro ao mover tarefa.\n")
 
+
+# ============================================================
+# Guardar e carregar tarefas
+# ============================================================
+
+def opcao_guardar():
+    tarefas = listar_tarefas()   # usa as tarefas atuais
+    guardar_tarefas(tarefas)
+    print("\n✔ Tarefas guardadas\n")
+
+
+def opcao_carregar():
+    carregar_tarefas()
+    print("\n✔ Tarefas carregadas \n")

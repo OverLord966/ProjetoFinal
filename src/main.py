@@ -5,7 +5,9 @@ from ui.menu import (
     opcao_editar,
     opcao_mover,
     opcao_concluir,
-    opcao_apagar
+    opcao_apagar,
+    opcao_guardar,
+    opcao_carregar
 )
 
 # Ponto de entrada principal da aplicação.
@@ -28,6 +30,10 @@ def main():
             opcao_apagar()
         elif opcao == "6":
             opcao_mover()
+        elif opcao == "7":
+            opcao_guardar()
+        elif opcao == "8":
+            opcao_carregar()
         elif opcao == "0":
             print("A sair...")
             break
