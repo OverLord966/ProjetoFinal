@@ -1,4 +1,4 @@
-# Nome do Projeto
+# Gestão de Tarefas
 
 Aplicação de consola em Python que permite a estudantes gerir tarefas académicas, prazos e prioridades de forma simples e organizada.
 
