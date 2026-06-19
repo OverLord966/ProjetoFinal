@@ -21,7 +21,7 @@ def pedir_texto(mensagem):
         texto = input(mensagem).strip()
         if texto != "":
             return texto
-        print("❌ Este campo não pode estar vazio.")
+        print(" Este campo não pode estar vazio.")
 
 
 def pedir_prioridade():
@@ -32,7 +32,7 @@ def pedir_prioridade():
         prioridade = input("Prioridade (baixa/média/alta): ").lower().strip()
         if prioridade in prioridades_validas:
             return prioridade
-        print("❌ Prioridade inválida! As opções são: baixa, média ou alta.")
+        print("Prioridade inválida! As opções são: baixa, média ou alta.")
 
 
 def pedir_data():
@@ -46,17 +46,17 @@ def pedir_data():
             limite_max = hoje + timedelta(days=365 * 5)
 
             if data < hoje:
-                print("❌ A data não pode ser anterior ao dia de hoje.")
+                print(" A data não pode ser anterior ao dia de hoje.")
                 continue
 
             if data > limite_max:
-                print("❌ A data é demasiado distante. Máximo permitido: 5 anos.")
+                print(" A data é demasiado distante. Máximo permitido: 5 anos.")
                 continue
 
             return data_str
 
         except ValueError:
-            print("❌ Data inválida! Usa o formato AAAA-MM-DD.")
+            print("Data inválida! Usa o formato AAAA-MM-DD.")
 
 
 def pedir_id_tarefa():
@@ -67,13 +67,13 @@ def pedir_id_tarefa():
         try:
             id_tarefa = int(input("ID da tarefa: "))
         except ValueError:
-            print("❌ O ID deve ser um número inteiro.")
+            print(" O ID deve ser um número inteiro.")
             continue
 
         if any(t["id"] == id_tarefa for t in tarefas):
             return id_tarefa
 
-        print("❌ Não existe nenhuma tarefa com esse ID.")
+        print(" Não existe nenhuma tarefa com esse ID.")
 
 
 # ============================================================
@@ -104,7 +104,7 @@ def opcao_criar():
     prazo = pedir_data()
 
     criar_tarefa(titulo, descricao, prioridade, prazo)
-    print("\n✔ Tarefa criada com sucesso!\n")
+    print("\n Tarefa criada com sucesso!\n")
 
 
 def opcao_listar():
@@ -157,11 +157,11 @@ def opcao_editar():
             novo_dia = input("Novo dia (1-31): ").strip().zfill(2)
 
             if not validar_data(ano, mes, novo_dia):
-                print("❌ Dia inválido para esse mês.")
+                print(" Dia inválido para esse mês.")
                 return
 
             if not data_nao_passada(ano, mes, novo_dia):
-                print("❌ A nova data não pode ser anterior ao dia de hoje.")
+                print(" A nova data não pode ser anterior ao dia de hoje.")
                 return
 
             novo_prazo = f"{ano}-{mes}-{novo_dia}"
@@ -170,11 +170,11 @@ def opcao_editar():
             novo_mes = input("Novo mês (1-12): ").strip().zfill(2)
 
             if not validar_data(ano, novo_mes, dia):
-                print("❌ Mês inválido ou dia não existe nesse mês.")
+                print(" Mês inválido ou dia não existe nesse mês.")
                 return
 
             if not data_nao_passada(ano, novo_mes, dia):
-                print("❌ A nova data não pode ser anterior ao dia de hoje.")
+                print(" A nova data não pode ser anterior ao dia de hoje.")
                 return
 
             novo_prazo = f"{ano}-{novo_mes}-{dia}"
@@ -183,11 +183,11 @@ def opcao_editar():
             novo_ano = input("Novo ano (ex: 2026): ").strip()
 
             if not validar_data(novo_ano, mes, dia):
-                print("❌ Ano inválido ou data impossível.")
+                print(" Ano inválido ou data impossível.")
                 return
 
             if not data_nao_passada(novo_ano, mes, dia):
-                print("❌ A nova data não pode ser anterior ao dia de hoje.")
+                print(" A nova data não pode ser anterior ao dia de hoje.")
                 return
 
             novo_prazo = f"{novo_ano}-{mes}-{dia}"
@@ -259,13 +259,13 @@ def submenu_editar_data():
 def opcao_concluir():
     id_tarefa = pedir_id_tarefa()
     concluir_tarefa(id_tarefa)
-    print("\n✔ Tarefa concluída com sucesso!\n")
+    print("\n Tarefa concluída com sucesso!\n")
 
 
 def opcao_apagar():
     id_tarefa = pedir_id_tarefa()
     apagar_tarefa(id_tarefa)
-    print("\n✔ Tarefa apagada com sucesso!\n")
+    print("\n Tarefa apagada com sucesso!\n")
 
 
 def opcao_mover():
@@ -273,9 +273,9 @@ def opcao_mover():
     nova_pos = int(input("Nova posição na lista: "))
 
     if mover_tarefa(id_tarefa, nova_pos):
-        print("\n✔ Tarefa movida com sucesso!\n")
+        print("\n Tarefa movida com sucesso!\n")
     else:
-        print("\n❌ Erro ao mover tarefa.\n")
+        print("\n Erro ao mover tarefa.\n")
 
 
 # ============================================================
@@ -285,9 +285,9 @@ def opcao_mover():
 def opcao_guardar():
     tarefas = listar_tarefas()   # usa as tarefas atuais
     guardar_tarefas(tarefas)
-    print("\n✔ Tarefas guardadas\n")
+    print("\n Tarefas guardadas\n")
 
 
 def opcao_carregar():
     carregar_tarefas()
-    print("\n✔ Tarefas carregadas \n")
+    print("\n Tarefas carregadas \n")
