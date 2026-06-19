@@ -1,20 +1,11 @@
 [
     {
         "id": 1,
-        "titulo": "Teste para macbook",
-        "descricao": "macbook a receber?",
+        "titulo": "teste",
+        "descricao": "teste",
         "prioridade": "alta",
-        "prazo": "2026-06-19",
+        "prazo": "2026-06-20",
         "estado": "pendente",
-        "criado_em": "2026-06-19 08:54"
-    },
-    {
-        "id": 2,
-        "titulo": "Teste recebido",
-        "descricao": "macbook recebeu e mandou",
-        "prioridade": "alta",
-        "prazo": "2026-06-19",
-        "estado": "pendente",
-        "criado_em": "2026-06-19 08:54"
+        "criado_em": "2026-06-19 11:39"
     }
 ]

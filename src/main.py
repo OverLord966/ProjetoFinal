@@ -40,6 +40,6 @@ def main():
         else:
             print("❌ Opção inválida!")
 
-
+# Só corre no Main.py. sem este código ele não iria correr código que devia
 if __name__ == "__main__":
     main()
